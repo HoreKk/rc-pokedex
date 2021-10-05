@@ -1,4 +1,3 @@
-
 export type Pokemon = {
   id: string,
   name: string,
@@ -7,3 +6,9 @@ export type Pokemon = {
 }
 
 export type Pokemons = Pokemon[]
+
+export type PokemonComponent = {
+  name: string,
+  imagePokemon: string,
+  handlePokemonModal: () => void
+}

@@ -65,7 +65,12 @@ export default function HomeScreen({ navigation } : RootTabScreenProps<'HomeScre
         numColumns={3}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <PokemonCard key={item.id} id={item.id} name={item.name} url={item.url} imagePokemon={item.imagePokemon} />
+          <PokemonCard 
+            key={item.id} 
+            name={item.name} 
+            imagePokemon={item.imagePokemon} 
+            handlePokemonModal={() => navigation.navigate('PokemonModal', { title: item.name, url: item.url })} 
+          />
         )}
       />
       {!firstLoad && (

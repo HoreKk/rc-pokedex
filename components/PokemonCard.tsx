@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, Image, ListRenderItem } from 'react-native';
 
-import type { Pokemon } from '../types/pokemon'
+import type { PokemonComponent } from '../types/pokemon'
 
-export const PokemonCard = ({ name, imagePokemon }: Pokemon) => {
+export const PokemonCard = ({ name, imagePokemon, handlePokemonModal }: PokemonComponent) => {
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.6}>
+    <TouchableOpacity style={styles.container} activeOpacity={0.6} onPress={handlePokemonModal}>
       <Image style={styles.image} source={{ uri: imagePokemon }} />
       <Text numberOfLines={1}>{ name }</Text>
     </TouchableOpacity>

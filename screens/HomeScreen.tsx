@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, ActivityIndicator } from 'react-native';
 
+import type { Pokemon, Pokemons } from '../types/pokemon'
+
 import { PokemonCard } from '../components/PokemonCard'
-import { RootTabScreenProps } from '../types';
-
-export type Pokemon = {
-  id: string,
-  name: string,
-  url: string,
-  imagePokemon: string,
-}
-
-type Pokemons = Pokemon[]
+import { RootTabScreenProps } from '../navigation';
 
 export default function HomeScreen({ navigation } : RootTabScreenProps<'HomeScreen'>) {
 

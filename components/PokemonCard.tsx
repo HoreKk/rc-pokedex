@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, ListRenderItem } from 'react-native';
 
-import type { Pokemon } from '../screens/HomeScreen'
+import type { Pokemon } from '../types/pokemon'
 
 export const PokemonCard = ({ name, imagePokemon }: Pokemon) => {
   return (

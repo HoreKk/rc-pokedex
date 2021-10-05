@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Button, FlatList, ActivityIndicator } from 'rea
 import type { Pokemon, Pokemons } from '../types/pokemon'
 
 import { PokemonCard } from '../components/PokemonCard'
-import { RootTabScreenProps } from '../navigation';
+import { RootTabScreenProps } from '../types/navigation';
 
 export default function HomeScreen({ navigation } : RootTabScreenProps<'HomeScreen'>) {
 

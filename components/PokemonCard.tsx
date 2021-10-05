@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, ListRenderItem } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Image, ListRenderItem } from 'react-native';
 
 import type { Pokemon } from '../types/pokemon'
 
 export const PokemonCard = ({ name, imagePokemon }: Pokemon) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} activeOpacity={0.6}>
       <Image style={styles.image} source={{ uri: imagePokemon }} />
-      <Text>{ name }</Text>
-    </View>
+      <Text numberOfLines={1}>{ name }</Text>
+    </TouchableOpacity>
   )
 }
 
@@ -17,10 +17,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#cabbe9',
     paddingBottom: 5,
     marginHorizontal: 5,
-    marginBottom: 15
+    marginBottom: 15,
+    borderRadius: 10
   },
   image: {
     width: 80,

@@ -10,7 +10,7 @@ export default function HomeScreen({ navigation } : RootTabScreenProps<'HomeScre
   
   const [firstLoad, setFirstLoad] = useState(true)
   const [isLoading, setIsLoading] = useState(false);
-  const [limit, setLimit] = useState(30);
+  const [limit, setLimit] = useState(15);
   const [offset, setOffset] = useState(0);
   const [count, setCount] = useState(0);
   
@@ -28,16 +28,14 @@ export default function HomeScreen({ navigation } : RootTabScreenProps<'HomeScre
         setOffset(offset + limit)
         break;
       case 'end':
-        setOffset(Math.round(count / 30) * 30)
+        setOffset(Math.ceil(count / limit) * limit - limit)
         break;
     }
   }
 
   useEffect(() => {
-
-    setIsLoading(true)
-
     async function fetchData() {
+      setIsLoading(true)
 
       const { results, count } = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`).then(response => response.json())
 
@@ -54,30 +52,26 @@ export default function HomeScreen({ navigation } : RootTabScreenProps<'HomeScre
         setCount(count)
       }
     }
-
     fetchData()
-
   }, [offset])
 
   return (
     <View style={styles.container}>
-      {isLoading ? <ActivityIndicator size={100} color="#0000ff" style={{ height: '91%' }} /> : (
-        <FlatList
-          style={{ width: '100%', paddingHorizontal: 10 }}
-          columnWrapperStyle={{ alignItems: 'center', justifyContent: 'center' }}
-          data={pokemons}
-          initialNumToRender={30}
-          numColumns={3}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <PokemonCard key={item.id} id={item.id} name={item.name} url={item.url} imagePokemon={item.imagePokemon} />
-          )}
-        />
-      )}
+      <FlatList
+        style={{ width: '100%', paddingHorizontal: 5, paddingTop: 15, paddingBottom: 5, flexGrow: 0 }}
+        columnWrapperStyle={{ alignItems: 'center', justifyContent: 'center' }}
+        data={pokemons}
+        initialNumToRender={limit}
+        numColumns={3}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <PokemonCard key={item.id} id={item.id} name={item.name} url={item.url} imagePokemon={item.imagePokemon} />
+        )}
+      />
       {!firstLoad && (
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 15 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 0 }}>
            <Button
-            disabled={offset < limit * 2}
+            disabled={offset <= limit * 2}
             onPress={() => handleChangePage('start')}
             title="<<"
           />
@@ -87,15 +81,15 @@ export default function HomeScreen({ navigation } : RootTabScreenProps<'HomeScre
             onPress={() => handleChangePage('back')}
             title="<"
           />
-          <Text style={{ marginHorizontal: 15, fontSize: 18 }}>{ (offset + limit) / 30 }</Text>
+          <Text style={{ marginHorizontal: 15, fontSize: 18 }}>{ (offset + limit) / limit }</Text>
           <Button
-            disabled={offset === Math.round(count / limit) * limit}
+            disabled={offset === Math.ceil(count / limit) * limit - limit}
             onPress={() => handleChangePage('next')}
             title=">"
           />
           <Text style={{ marginHorizontal: 5 }} />
           <Button
-            disabled={offset > Math.round(count / limit) * limit - limit * 2}
+            disabled={offset >= Math.ceil(count / limit) * limit - limit * 2}
             onPress={() => handleChangePage('end')}
             title=">>"
           />
@@ -109,16 +103,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 45
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '100%',
-  },
+    alignContent: 'flex-end'
+  }
 });
